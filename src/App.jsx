@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import TubesCursor from './components/TubesCursor';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,8 +73,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-[#0b0c0e] text-slate-100 min-h-screen selection:bg-white selection:text-black">
+    <div className="bg-[#0b0c0e] text-slate-100 min-h-screen selection:bg-white selection:text-black relative">
       
+      {/* 3D Glowing Neon Tubes Cursor (Active exclusively on the background) */}
+      <TubesCursor />
+
       {/* 1. Dennis Snellenberg Multilingual Preloader */}
       {!preloaderComplete && (
         <Preloader onComplete={() => setPreloaderComplete(true)} />
@@ -83,7 +87,7 @@ export default function App() {
       <Navbar />
 
       {/* 3. Hero Section featuring Portrait & Editorial Typography */}
-      <main>
+      <main className="relative z-10">
         <Hero ready={preloaderComplete} />
 
         {/* 4. Selected Work Section (Clean, Spacious Editorial Grid) */}
