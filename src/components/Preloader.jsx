@@ -102,18 +102,20 @@ export default function Preloader({ onComplete }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#141517] text-white"
+      className="fixed inset-0 z-[100] bg-[#141517] text-white pointer-events-auto"
       style={{ height: 'calc(100vh + 300px)' }}
     >
-      {/* Centered Cycling Word */}
-      <div
-        ref={textRef}
-        className="relative z-10 flex items-center gap-3 select-none"
-      >
-        <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-lg shadow-cyan-400/50" />
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-slate-100 font-sans">
-          {WORDS[index]}
-        </h1>
+      {/* Centered Cycling Word - anchored to visible 100vh viewport */}
+      <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center pointer-events-none">
+        <div
+          ref={textRef}
+          className="relative z-10 flex items-center gap-3 select-none"
+        >
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-lg shadow-cyan-400/50" />
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-slate-100 font-sans">
+            {WORDS[index]}
+          </h1>
+        </div>
       </div>
 
       {/* SVG Liquid Bottom Curve */}
