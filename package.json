@@ -1,0 +1,33 @@
+{
+  "name": "himanshu-dot-dev-portfolio",
+  "version": "1.0.0",
+  "description": "Modern developer portfolio for Himanshu Sharma - Full Stack Developer & AI Workstation Engineer",
+  "author": "Himanshu Sharma <himanshudotdev2003@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/himanshu-dot-dev/himanshu-dot-dev-portfolio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himanshu-dot-dev/himanshu-dot-dev-portfolio.git"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "^1.73.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.90.0",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.3.6"
+  }
+}
