@@ -20,30 +20,6 @@ const FEATURED_PROJECTS = [
     tags: ['Electron.js', 'React', 'TypeScript', 'Tailwind CSS'],
     github: 'https://github.com/himanshu-dot-dev/versarail-ai',
     demo: 'https://github.com/himanshu-dot-dev/versarail-landing'
-  },
-  {
-    id: 'agent-harness',
-    title: 'Agent Harness',
-    category: 'AI Tooling & Boilerplate',
-    description: 'Autonomous AI agent execution boilerplate tailored for multi-agent orchestration, resilient background processes, and IPC messaging.',
-    tags: ['Electron.js', 'Node.js', 'Autonomous Agents'],
-    github: 'https://github.com/himanshu-dot-dev/agent-harness'
-  },
-  {
-    id: 'versarail-landing',
-    title: 'VersaRail Showcase',
-    category: 'Web & Distribution',
-    description: 'High-speed static showcase and multi-OS binary download site for VersaRail AI.',
-    tags: ['Tailwind CSS', 'Static Web', 'UI/UX'],
-    github: 'https://github.com/himanshu-dot-dev/versarail-landing'
-  },
-  {
-    id: 'clothing-website-demo',
-    title: 'Clothing Storefront',
-    category: 'Interactive E-Commerce',
-    description: 'Modern responsive storefront with dynamic catalog browsing and fluid interactive cart UI.',
-    tags: ['JavaScript', 'CSS3', 'E-Commerce'],
-    github: 'https://github.com/himanshu-dot-dev/clothing-website-demo'
   }
 ];
 
@@ -118,39 +94,39 @@ export default function App() {
             <div className="space-y-2">
               <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest">Selected Work</span>
               <h2 className="text-3xl sm:text-5xl font-light text-slate-900 dark:text-white tracking-tight transition-colors">
-                Featured Projects
+                Featured Project
               </h2>
             </div>
             <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md font-normal leading-relaxed transition-colors">
-              A curated selection of real desktop software, AI agent systems, and web projects.
+              Desktop software and developer tooling built for performance and security.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="max-w-4xl">
             {FEATURED_PROJECTS.map((project, idx) => (
               <div 
                 key={project.id}
-                className="group p-8 rounded-3xl border border-black/[0.08] dark:border-white/[0.08] bg-white/90 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/20 shadow-sm hover:shadow-xl dark:shadow-none dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between space-y-6 backdrop-blur-sm"
+                className="group p-8 sm:p-12 rounded-3xl border border-black/[0.08] dark:border-white/[0.08] bg-white/90 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/20 shadow-sm hover:shadow-2xl dark:shadow-none dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between space-y-8 backdrop-blur-sm"
               >
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                    <span>0{idx + 1}</span>
+                    <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 font-medium">Flagship Software</span>
                     <span className="text-slate-600 dark:text-slate-400 font-medium">{project.category}</span>
                   </div>
 
-                  <h3 className="text-2xl font-semibold text-slate-950 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-3xl sm:text-4xl font-semibold text-slate-950 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                     {project.title}
                   </h3>
 
-                  <p className="text-sm text-slate-700 dark:text-slate-400 leading-relaxed font-normal transition-colors">
+                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-normal transition-colors max-w-3xl">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-2.5 pt-2">
                     {project.tags.map((tag, tIdx) => (
                       <span 
                         key={tIdx}
-                        className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.06] text-slate-800 dark:text-slate-300 transition-colors"
+                        className="px-3 py-1.5 rounded-lg text-xs font-mono bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.06] text-slate-800 dark:text-slate-200 transition-colors"
                       >
                         {tag}
                       </span>
@@ -158,12 +134,12 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between text-xs transition-colors">
+                <div className="pt-8 border-t border-black/[0.06] dark:border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-sm transition-colors">
                   <a 
                     href={project.github} 
                     target="_blank" 
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-slate-800 dark:text-slate-300 hover:text-cyan-700 dark:hover:text-white font-medium transition"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-200 font-medium transition shadow-md"
                   >
                     <span>View Repository</span>
                     <span>↗</span>
@@ -174,9 +150,9 @@ export default function App() {
                       href={project.demo} 
                       target="_blank" 
                       rel="noreferrer"
-                      className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 font-medium transition"
+                      className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 font-medium transition"
                     >
-                      Live Demo ↗
+                      Showcase & Downloads ↗
                     </a>
                   )}
                 </div>
