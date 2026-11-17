@@ -8,7 +8,6 @@ export default function Hero({ ready }) {
   useEffect(() => {
     if (!ready) return;
 
-    // Gentle staggered reveal once the preloader completes
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.hero-reveal',
@@ -39,7 +38,6 @@ export default function Hero({ ready }) {
     return () => ctx.revert();
   }, [ready]);
 
-  // Subtle 3D tilt tracking mouse
   const handleMouseMove = (e) => {
     const card = imageCardRef.current;
     if (!card) return;
@@ -78,29 +76,29 @@ export default function Hero({ ready }) {
         <div className="lg:col-span-7 space-y-8">
           
           {/* Status Badge */}
-          <div className="hero-reveal inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="hero-reveal inline-flex items-center gap-2.5 px-3 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] text-slate-800 dark:text-slate-300 text-xs font-mono transition-colors shadow-sm dark:shadow-none backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
             <span>Available for projects & roles</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-slate-400">Delhi, India</span>
+            <span className="text-slate-400 dark:text-slate-600">•</span>
+            <span className="text-slate-600 dark:text-slate-400">Delhi, India</span>
           </div>
 
           {/* Main Title */}
           <div className="space-y-4">
-            <h1 className="hero-reveal text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.08]">
+            <h1 className="hero-reveal text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-slate-950 dark:text-white leading-[1.08] transition-colors">
               Himanshu <br />
-              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-slate-200 to-slate-400">
+              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-slate-900 to-slate-800 dark:from-white dark:via-slate-200 dark:to-slate-400">
                 Sharma
               </span>
             </h1>
 
-            <p className="hero-reveal text-lg sm:text-xl text-slate-400 font-normal leading-relaxed max-w-xl">
+            <p className="hero-reveal text-lg sm:text-xl text-slate-700 dark:text-slate-400 font-normal leading-relaxed max-w-xl transition-colors">
               Full Stack Developer & AI Engineer focused on building robust local-first desktop software, agentic workflows, and fast web systems.
             </p>
           </div>
 
           {/* Core Highlights / Statement */}
-          <div className="hero-reveal border-l-2 border-slate-700 pl-4 py-1 text-sm text-slate-400 italic">
+          <div className="hero-reveal border-l-2 border-slate-400 dark:border-slate-700 pl-4 py-1 text-sm text-slate-700 dark:text-slate-400 italic transition-colors">
             "First, solve the problem. Then, write the code."
           </div>
 
@@ -108,7 +106,7 @@ export default function Hero({ ready }) {
           <div className="hero-reveal flex flex-wrap items-center gap-4 pt-2">
             <a 
               href="#projects"
-              className="px-6 py-3.5 rounded-full bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-all flex items-center gap-2 shadow-xl shadow-white/5"
+              className="px-6 py-3.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 font-semibold text-sm transition-all flex items-center gap-2 shadow-xl shadow-slate-900/10 dark:shadow-white/5"
             >
               <span>Explore Selected Work</span>
               <span>↓</span>
@@ -116,21 +114,21 @@ export default function Hero({ ready }) {
 
             <a 
               href="#contact"
-              className="px-6 py-3.5 rounded-full border border-white/15 hover:border-white/30 bg-transparent text-slate-300 hover:text-white font-medium text-sm transition"
+              className="px-6 py-3.5 rounded-full border border-slate-300 dark:border-white/15 hover:border-slate-500 dark:hover:border-white/30 bg-white/60 dark:bg-transparent text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white font-medium text-sm transition backdrop-blur-sm"
             >
               Get in Touch
             </a>
           </div>
 
           {/* Quick Stats bar */}
-          <div className="hero-reveal pt-6 border-t border-white/[0.08] flex items-center gap-8 sm:gap-12 text-xs font-mono text-slate-400">
+          <div className="hero-reveal pt-6 border-t border-black/[0.08] dark:border-white/[0.08] flex items-center gap-8 sm:gap-12 text-xs font-mono text-slate-500 dark:text-slate-400 transition-colors">
             <div>
-              <div className="text-white text-base font-semibold">Creator</div>
-              <div className="text-slate-500">VersaRail AI Workstation</div>
+              <div className="text-slate-900 dark:text-white text-base font-semibold">Creator</div>
+              <div className="text-slate-500 dark:text-slate-500">VersaRail AI Workstation</div>
             </div>
             <div>
-              <div className="text-white text-base font-semibold">Specialization</div>
-              <div className="text-slate-500">Electron • React • AI Agents</div>
+              <div className="text-slate-900 dark:text-white text-base font-semibold">Specialization</div>
+              <div className="text-slate-500 dark:text-slate-500">Electron • React • AI Agents</div>
             </div>
           </div>
         </div>
@@ -141,11 +139,11 @@ export default function Hero({ ready }) {
             ref={imageCardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full max-w-[380px] aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 bg-slate-900 shadow-2xl group cursor-pointer"
+            className="relative w-full max-w-[380px] aspect-[4/5] rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-slate-900 shadow-xl dark:shadow-2xl group cursor-pointer transition-colors"
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Ambient background glow behind photo */}
-            <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/10 via-transparent to-indigo-500/10 rounded-3xl blur-xl pointer-events-none opacity-60 group-hover:opacity-100 transition duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/15 via-transparent to-indigo-500/15 rounded-3xl blur-xl pointer-events-none opacity-60 group-hover:opacity-100 transition duration-500" />
 
             {/* The Portrait Image */}
             <img 
@@ -155,13 +153,13 @@ export default function Hero({ ready }) {
             />
 
             {/* Subtle Vignette overlay to seamlessly blend with dark background */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
 
             {/* Bottom Card Meta Details */}
-            <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl backdrop-blur-md bg-slate-950/70 border border-white/10 flex items-center justify-between text-xs">
+            <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl backdrop-blur-md bg-slate-950/75 border border-white/10 flex items-center justify-between text-xs">
               <div>
                 <p className="text-white font-medium">Himanshu Sharma</p>
-                <p className="text-slate-400 text-[11px] font-mono">Full Stack & AI Engineer</p>
+                <p className="text-slate-300 text-[11px] font-mono">Full Stack & AI Engineer</p>
               </div>
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20" />
             </div>
