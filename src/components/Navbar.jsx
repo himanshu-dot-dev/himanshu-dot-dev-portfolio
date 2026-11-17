@@ -27,6 +27,12 @@ export default function Navbar({ theme, onToggleTheme }) {
             Work
           </a>
           <a 
+            href="#skills" 
+            className="hover:text-slate-950 dark:hover:text-white transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-500 dark:after:bg-cyan-400 hover:after:w-full after:transition-all after:duration-300"
+          >
+            Skills
+          </a>
+          <a 
             href="#contact" 
             className="hover:text-slate-950 dark:hover:text-white transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-500 dark:after:bg-cyan-400 hover:after:w-full after:transition-all after:duration-300"
           >

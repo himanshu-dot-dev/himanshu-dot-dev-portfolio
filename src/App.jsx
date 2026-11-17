@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Skills from './components/Skills';
 import TubesCursor from './components/TubesCursor';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -160,6 +161,9 @@ export default function App() {
             ))}
           </div>
         </section>
+
+        {/* 4. Categorized Skills Section */}
+        <Skills />
 
         {/* 5. Clean Contact Footer */}
         <section id="contact" className="py-24 px-6 sm:px-10 max-w-7xl mx-auto border-t border-black/[0.08] dark:border-white/[0.08] text-center space-y-8 transition-colors">
