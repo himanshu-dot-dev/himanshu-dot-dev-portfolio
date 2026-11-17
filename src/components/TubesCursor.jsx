@@ -22,19 +22,9 @@ const DARK_PALETTES = [
 
 const LIGHT_PALETTES = [
   {
-    // Electric Cobalt, Royal Indigo & Vivid Magenta
-    tubes: ["#0284c7", "#4f46e5", "#be185d"],
-    lights: ["#38bdf8", "#818cf8", "#fb7185", "#34d399"]
-  },
-  {
-    // Emerald Jade, Azure & Deep Purple
-    tubes: ["#059669", "#2563eb", "#7c3aed"],
-    lights: ["#10b981", "#3b82f6", "#a855f7", "#06b6d4"]
-  },
-  {
-    // Crimson Ruby, Hot Coral & Royal Violet
-    tubes: ["#dc2626", "#ea580c", "#7c3aed"],
-    lights: ["#f87171", "#fb923c", "#c084fc", "#f43f5e"]
+    // Minimalist Luxury Glossy Obsidian: pure jet black lacquer with crisp silver specular highlights
+    tubes: ["#0a0a0a", "#050505", "#0e0e0e"],
+    lights: ["#ffffff", "#f1f5f9", "#e2e8f0", "#ffffff"]
   }
 ];
 
@@ -55,25 +45,29 @@ export default function TubesCursor({ theme = 'dark' }) {
       app.three.renderer.setClearColor(bgColor, 1);
     }
 
-    // 2. Adjust material physics for light vs dark backgrounds:
-    // In light mode: use glossy lacquered chrome (lower metalness, low roughness) so colors have rich diffuse pigment and specular shine
-    // In dark mode: use high metallic PBR for glowing neon reflections
+    // 2. Adjust material physics for glossy obsidian lacquer in light mode:
+    // In light mode: use 0.90 metalness and 0.07 roughness so the black tubes behave like
+    // mirror-polished piano lacquer / liquid obsidian, catching sharp white & silver specular reflections.
+    // In dark mode: use 0.95 metalness and 0.20 roughness for luminous neon reflections.
     if (app.tubes?.setMaterialOption) {
-      app.tubes.setMaterialOption('metalness', isLight ? 0.25 : 0.95);
-      app.tubes.setMaterialOption('roughness', isLight ? 0.12 : 0.2);
+      app.tubes.setMaterialOption('metalness', isLight ? 0.90 : 0.95);
+      app.tubes.setMaterialOption('roughness', isLight ? 0.07 : 0.20);
     }
 
-    // 3. Set point light intensity: high intensity in light mode ensures specular highlights cut through bright background
+    // 3. Set point light intensity: 240 in light mode keeps sharp specular highlights along the black curves
     if (app.tubes?.setLightsIntensity) {
-      app.tubes.setLightsIntensity(isLight ? 450 : 220);
+      app.tubes.setLightsIntensity(isLight ? 240 : 220);
     }
 
     // 4. Configure bloom:
-    // In light mode: threshold set to 0.99 so the 0.975 background doesn't bloom, but 400+ specular highlights shine
+    // In light mode: threshold set to 0.98 so the 0.975 background doesn't bloom, but specular glints sparkle
     // In dark mode: threshold is 0 for rich neon bloom on dark canvas
     if (app.bloomPass) {
-      app.bloomPass.threshold.value = isLight ? 0.99 : 0;
-      app.bloomPass.strength.value = isLight ? 1.4 : 1.5;
+      app.bloomPass.threshold.value = isLight ? 0.98 : 0;
+      app.bloomPass.strength.value = isLight ? 1.2 : 1.5;
+      if (app.bloomPass.radius) {
+        app.bloomPass.radius.value = isLight ? 0.35 : 0.5;
+      }
     }
 
     // 5. Update palettes
@@ -103,7 +97,7 @@ export default function TubesCursor({ theme = 'dark' }) {
             colors: initial.tubes
           },
           lights: {
-            intensity: isLight ? 450 : 220,
+            intensity: isLight ? 240 : 220,
             colors: initial.lights
           }
         });
@@ -115,21 +109,6 @@ export default function TubesCursor({ theme = 'dark' }) {
         console.error("Failed to initialize TubesCursor:", err);
       }
     }, 50);
-
-    // Subtle dimming when cursor hovers directly over interactive components
-    const handlePointerMove = (e) => {
-      const el = document.elementFromPoint(e.clientX, e.clientY);
-      if (!el || !wrapperRef.current) return;
-
-      const overComp = Boolean(
-        el.closest(
-          'button, a, input, textarea, [data-component], img, [role="button"]'
-        )
-      );
-
-      // Smooth subtle dimming to 0.4 instead of disappearing to 0.15
-      wrapperRef.current.style.opacity = overComp ? '0.4' : '1';
-    };
 
     // Click background to switch color themes
     const handleClick = (e) => {
@@ -144,7 +123,10 @@ export default function TubesCursor({ theme = 'dark' }) {
       }
 
       if (appRef.current && appRef.current.tubes) {
-        const palettes = theme === 'light' ? LIGHT_PALETTES : DARK_PALETTES;
+        // Light mode is strictly monochrome glossy black
+        if (theme === 'light') return;
+
+        const palettes = DARK_PALETTES;
         paletteIndexRef.current = (paletteIndexRef.current + 1) % palettes.length;
         const next = palettes[paletteIndexRef.current];
         appRef.current.tubes.setColors(next.tubes);
@@ -152,12 +134,10 @@ export default function TubesCursor({ theme = 'dark' }) {
       }
     };
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('click', handleClick);
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('click', handleClick);
       if (app && typeof app.dispose === 'function') {
         app.dispose();
