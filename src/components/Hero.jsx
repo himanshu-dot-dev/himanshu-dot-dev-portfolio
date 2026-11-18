@@ -139,29 +139,44 @@ export default function Hero({ ready }) {
             ref={imageCardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full max-w-[380px] aspect-[4/5] rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-slate-900 shadow-xl dark:shadow-2xl group cursor-pointer transition-colors"
+            className="relative w-full max-w-[380px] aspect-[4/5] rounded-3xl p-[2px] group cursor-pointer transition-all duration-500 ease-out"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* Ambient background glow behind photo */}
-            <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/15 via-transparent to-indigo-500/15 rounded-3xl blur-xl pointer-events-none opacity-60 group-hover:opacity-100 transition duration-500" />
+            {/* 1. Ambient Blurred Glow Halo (Sweeps in sync on hover) */}
+            <div className="absolute -inset-2 rounded-[28px] overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none">
+              <div className="absolute -inset-[100%] animate-border-beam border-beam-blur" />
+            </div>
 
-            {/* The Portrait Image */}
-            <img 
-              src="/himanshu.jpg" 
-              alt="Himanshu Sharma" 
-              className="w-full h-full object-cover object-top transition duration-700 ease-out group-hover:scale-[1.03]"
-            />
+            {/* 2. Sharp Border Beam Track (Starts at top and sweeps perimeter on hover) */}
+            <div className="absolute inset-0 rounded-3xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+              <div className="absolute -inset-[100%] animate-border-beam border-beam-gradient" />
+            </div>
 
-            {/* Subtle Vignette overlay to seamlessly blend with dark background */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
+            {/* 3. The Inner Card Content */}
+            <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-slate-100 dark:bg-slate-900 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-2xl transition-colors">
+              
+              {/* Ambient background glow inside photo */}
+              <div className="absolute -inset-1 bg-gradient-to-tr from-cyan-500/15 via-transparent to-indigo-500/15 dark:from-cyan-400/30 dark:via-white/10 dark:to-indigo-400/30 rounded-3xl blur-xl pointer-events-none opacity-40 group-hover:opacity-100 transition duration-500" />
 
-            {/* Bottom Card Meta Details */}
-            <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl backdrop-blur-md bg-slate-950/75 border border-white/10 flex items-center justify-between text-xs">
-              <div>
-                <p className="text-white font-medium">Himanshu Sharma</p>
-                <p className="text-slate-300 text-[11px] font-mono">Full Stack & AI Engineer</p>
+              {/* The Portrait Image */}
+              <img 
+                src="/himanshu.jpg" 
+                alt="Himanshu Sharma" 
+                className="w-full h-full object-cover object-top transition duration-700 ease-out group-hover:scale-[1.03]"
+              />
+
+              {/* Subtle Vignette overlay to seamlessly blend with dark background */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
+
+              {/* Bottom Card Meta Details */}
+              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl backdrop-blur-md bg-slate-950/75 border border-white/10 flex items-center justify-between text-xs">
+                <div>
+                  <p className="text-white font-medium">Himanshu Sharma</p>
+                  <p className="text-slate-300 text-[11px] font-mono">Full Stack & AI Engineer</p>
+                </div>
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20" />
               </div>
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20" />
+
             </div>
           </div>
         </div>
