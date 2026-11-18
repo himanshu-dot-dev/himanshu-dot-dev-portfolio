@@ -1,159 +1,138 @@
 import React from 'react';
 import {
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNextdotjs,
-  SiTailwindcss,
+  SiDocker,
   SiElectron,
-  SiThreedotjs,
-  SiHtml5,
-  SiCss,
-  SiNodedotjs,
   SiExpress,
-  SiPython,
-  SiFastapi,
-  SiMongodb,
-  SiPostgresql,
-  SiSqlite,
-  SiRedis,
-  SiPrisma,
-  SiSupabase,
   SiGit,
   SiGithub,
-  SiDocker,
-  SiLinux,
-  SiVite,
-  SiPostman,
-  SiPnpm
+  SiJavascript,
+  SiMongodb,
+  SiNodedotjs,
+  SiReact,
+  SiSqlite,
+  SiSupabase,
+  SiTailwindcss,
+  SiTypescript,
+  SiVitest,
+  SiZod
 } from 'react-icons/si';
-import { TbBrandVscode } from 'react-icons/tb';
+import { Database, Workflow } from 'lucide-react';
 
-const SKILL_CATEGORIES = [
+const STACK_DOMAINS = [
   {
-    id: 'frontend',
-    title: 'Frontend Development',
-    description: 'Modern component architectures, interactive physics, and design systems.',
-    skills: [
-      { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', tag: 'ESNext' },
-      { name: 'TypeScript', icon: SiTypescript, color: '#3178C6', tag: 'Typed' },
-      { name: 'React', icon: SiReact, color: '#61DAFB', tag: 'Core' },
-      { name: 'Next.js', icon: SiNextdotjs, color: 'currentColor', tag: 'SSR / SSG' },
-      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', tag: 'Styling' },
-      { name: 'Electron.js', icon: SiElectron, color: '#47848F', tag: 'Desktop UI' },
-      { name: 'Three.js / WebGL', icon: SiThreedotjs, color: 'currentColor', tag: '3D Graphics' },
-      { name: 'HTML5', icon: SiHtml5, color: '#E34F26', tag: 'Semantic' },
-      { name: 'CSS3', icon: SiCss, color: '#1572B6', tag: 'Layout' }
+    id: 'frontend-desktop',
+    index: '01',
+    title: 'Frontend & Desktop',
+    summary: 'Typed interfaces, design systems, and cross-platform desktop shells.',
+    items: [
+      { name: 'TypeScript', icon: SiTypescript },
+      { name: 'JavaScript', icon: SiJavascript },
+      { name: 'React', icon: SiReact },
+      { name: 'Electron', icon: SiElectron },
+      { name: 'Tailwind CSS', icon: SiTailwindcss }
     ]
   },
   {
-    id: 'backend',
-    title: 'Backend Engineering',
-    description: 'High-throughput runtimes, asynchronous microservices, and IPC messaging.',
-    skills: [
-      { name: 'Node.js', icon: SiNodedotjs, color: '#5FA04E', tag: 'Runtime' },
-      { name: 'Express.js', icon: SiExpress, color: 'currentColor', tag: 'REST APIs' },
-      { name: 'Python', icon: SiPython, color: '#3776AB', tag: 'AI & Systems' },
-      { name: 'FastAPI', icon: SiFastapi, color: '#009688', tag: 'Async API' },
-      { name: 'Electron IPC', icon: SiElectron, color: '#47848F', tag: 'Desktop Engine' }
+    id: 'backend-systems',
+    index: '02',
+    title: 'Backend & Runtime',
+    summary: 'API services, typed IPC contracts, schema validation, and desktop engines.',
+    items: [
+      { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'Express.js', icon: SiExpress },
+      { name: 'Electron IPC', icon: SiElectron },
+      { name: 'Zod', icon: SiZod }
     ]
   },
   {
-    id: 'database',
-    title: 'Databases & Storage',
-    description: 'ACID-compliant relational schemas, document stores, and in-memory caches.',
-    skills: [
-      { name: 'MongoDB', icon: SiMongodb, color: '#47A248', tag: 'NoSQL' },
-      { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1', tag: 'Relational' },
-      { name: 'SQLite', icon: SiSqlite, color: '#003B57', tag: 'Embedded' },
-      { name: 'Redis', icon: SiRedis, color: '#DC382D', tag: 'Cache & Queue' },
-      { name: 'Prisma ORM', icon: SiPrisma, color: 'currentColor', tag: 'Type-Safe ORM' },
-      { name: 'Supabase', icon: SiSupabase, color: '#3ECF8E', tag: 'BaaS / Postgres' }
+    id: 'ai-data',
+    index: '03',
+    title: 'AI Systems & Data',
+    summary: 'Retrieval pipelines, vector search, automation, and local/cloud storage.',
+    items: [
+      { name: 'RAG Pipelines', icon: Workflow },
+      { name: 'AI Automation', icon: Workflow },
+      { name: 'Pinecone', icon: Database },
+      { name: 'node:sqlite', icon: SiSqlite },
+      { name: 'MongoDB', icon: SiMongodb },
+      { name: 'Supabase', icon: SiSupabase }
     ]
   },
   {
-    id: 'tools',
-    title: 'Developer Tools & DevOps',
-    description: 'Version control workflows, build tooling, containerization, and automation.',
-    skills: [
-      { name: 'Git', icon: SiGit, color: '#F05032', tag: 'VCS' },
-      { name: 'GitHub', icon: SiGithub, color: 'currentColor', tag: 'CI/CD' },
-      { name: 'Docker', icon: SiDocker, color: '#2496ED', tag: 'Containers' },
-      { name: 'Linux', icon: SiLinux, color: '#FCC624', tag: 'Kernel / OS' },
-      { name: 'VS Code', icon: TbBrandVscode, color: '#007ACC', tag: 'Editor' },
-      { name: 'Vite', icon: SiVite, color: '#646CFF', tag: 'Bundler' },
-      { name: 'Postman', icon: SiPostman, color: '#FF6C37', tag: 'API Testing' },
-      { name: 'pnpm / npm', icon: SiPnpm, color: '#F69220', tag: 'Pkg Manager' }
+    id: 'tooling',
+    index: '04',
+    title: 'Testing & Delivery',
+    summary: 'Version control, automated test suites, and container workflows.',
+    items: [
+      { name: 'Vitest', icon: SiVitest },
+      { name: 'Docker', icon: SiDocker },
+      { name: 'Git', icon: SiGit },
+      { name: 'GitHub', icon: SiGithub }
     ]
   }
 ];
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 px-6 sm:px-10 max-w-7xl mx-auto border-t border-black/[0.08] dark:border-white/[0.08] transition-colors">
-      
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-        <div className="space-y-2">
-          <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest">Technical Competencies</span>
-          <h2 className="text-3xl sm:text-5xl font-light text-slate-900 dark:text-white tracking-tight transition-colors">
-            Skills & Stack
+    <section
+      id="stack"
+      aria-labelledby="stack-heading"
+      className="py-20 sm:py-28 px-5 sm:px-8 max-w-6xl mx-auto border-t border-[var(--border-subtle)]"
+    >
+      {/* Header */}
+      <div className="reveal-section flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <div className="space-y-3">
+          <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">
+            03 / Stack &amp; Tooling
+          </p>
+          <h2
+            id="stack-heading"
+            className="font-display font-semibold tracking-[-0.03em] text-[var(--text-primary)]"
+            style={{ fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)' }}
+          >
+            Technologies I build with
           </h2>
         </div>
-        <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md font-normal leading-relaxed transition-colors">
-          Languages, frameworks, databases, and tooling applied across desktop workstation engineering and modern web systems.
+        <p className="text-sm text-[var(--text-secondary)] max-w-[44ch] leading-relaxed">
+          Core languages, frameworks, data layers, and tooling used across web products, desktop software, and AI workflows.
         </p>
       </div>
 
-      {/* 4 Categorized Columns / Bento Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {SKILL_CATEGORIES.map((category) => (
+      {/* Hairline-divided editorial specification matrix (zero empty voids, zero mobile truncation) */}
+      <div className="reveal-section border-t border-[var(--border-subtle)] divide-y divide-[var(--border-subtle)]">
+        {STACK_DOMAINS.map((domain) => (
           <div
-            key={category.id}
-            className="p-8 sm:p-10 rounded-3xl border border-black/[0.08] dark:border-white/[0.08] bg-white/90 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/20 shadow-sm hover:shadow-xl dark:shadow-none dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between space-y-8 backdrop-blur-sm"
+            key={domain.id}
+            className="py-7 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start"
           >
-            {/* Category Header */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl sm:text-2xl font-semibold text-slate-950 dark:text-white tracking-tight transition-colors">
-                  {category.title}
-                </h3>
-                <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
-                  {category.skills.length} skills
+            <div className="lg:col-span-4 space-y-1.5">
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-mono text-xs text-[var(--text-muted)]">
+                  {domain.index}
                 </span>
+                <h3 className="font-display text-base sm:text-lg font-semibold text-[var(--text-primary)]">
+                  {domain.title}
+                </h3>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
-                {category.description}
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed pl-7">
+                {domain.summary}
               </p>
             </div>
 
-            {/* Skills Pills Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {category.skills.map((skill) => {
-                const IconComponent = skill.icon;
+            <div className="lg:col-span-8 flex flex-wrap gap-2.5 lg:pt-0.5 pl-7 lg:pl-0">
+              {domain.items.map((skill) => {
+                const Icon = skill.icon;
                 return (
-                  <div
+                  <span
                     key={skill.name}
-                    className="group/skill flex items-center gap-3 p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] hover:bg-black/[0.06] dark:hover:bg-white/[0.07] border border-black/[0.06] dark:border-white/[0.06] hover:border-black/15 dark:hover:border-white/20 transition-all duration-200 cursor-default"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-sm font-medium text-[var(--text-primary)] hover:border-[var(--border-strong)] transition-colors"
                   >
-                    <div 
-                      className="p-2 rounded-xl bg-white dark:bg-black/40 shadow-sm border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-center shrink-0 group-hover/skill:scale-110 transition-transform duration-200"
-                    >
-                      <IconComponent
-                        className="w-4 h-4 transition-colors"
-                        style={{ color: skill.color === 'currentColor' ? undefined : skill.color }}
-                      />
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
-                        {skill.name}
-                      </p>
-                      <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400 truncate">
-                        {skill.tag}
-                      </p>
-                    </div>
-                  </div>
+                    <Icon
+                      className="w-3.5 h-3.5 text-[var(--text-muted)] shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span>{skill.name}</span>
+                  </span>
                 );
               })}
             </div>

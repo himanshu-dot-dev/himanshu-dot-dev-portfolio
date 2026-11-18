@@ -1,31 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import AmbientPointer from './components/AmbientPointer';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import FeaturedWork from './components/FeaturedWork';
+import About from './components/About';
 import Skills from './components/Skills';
-import TubesCursor from './components/TubesCursor';
+import Contact from './components/Contact';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Authentic Project Data
-const FEATURED_PROJECTS = [
-  {
-    id: 'versarail-ai',
-    title: 'VersaRail AI',
-    category: 'Workstation & Desktop App',
-    description: 'Local-first multi-provider desktop AI coding workstation featuring token calculation engines, sandboxed execution, and diff-first security.',
-    tags: ['Electron.js', 'React', 'TypeScript', 'Tailwind CSS'],
-    github: 'https://github.com/himanshu-dot-dev/versarail-ai',
-    demo: 'https://github.com/himanshu-dot-dev/versarail-landing'
-  }
-];
+const CURRENT_YEAR = new Date().getFullYear();
 
 export default function App() {
   const [preloaderComplete, setPreloaderComplete] = useState(false);
+  const lenisRef = useRef(null);
+  const mainRef = useRef(null);
+
   const [theme, setTheme] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('portfolio_theme');
@@ -43,21 +38,35 @@ export default function App() {
       root.classList.remove('dark');
     }
     localStorage.setItem('portfolio_theme', theme);
+    const meta = document.getElementById('theme-color-meta');
+    if (meta) {
+      meta.setAttribute('content', theme === 'dark' ? '#0b0c0e' : '#f7f7f5');
+    }
   }, [theme]);
 
-  const handleToggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
+  const handleToggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
+  const handlePreloaderComplete = useCallback(() => {
+    setPreloaderComplete(true);
+  }, []);
+
+  // Initialize Lenis smooth scroll (disabled automatically when reduced-motion is preferred)
   useEffect(() => {
-    // Initialize Lenis smooth inertia scrolling
+    if (typeof window === 'undefined') return undefined;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return undefined;
+
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true
     });
 
+    lenisRef.current = lenis;
     lenis.on('scroll', ScrollTrigger.update);
+
     const tickerCallback = (time) => {
       lenis.raf(time * 1000);
     };
@@ -68,146 +77,107 @@ export default function App() {
     return () => {
       gsap.ticker.remove(tickerCallback);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
+  // Subtle once-only scroll reveals for sections below the fold
+  useEffect(() => {
+    if (!preloaderComplete || !mainRef.current) return undefined;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return undefined;
+
+    const ctx = gsap.context(() => {
+      const nodes = gsap.utils.toArray('.reveal-section');
+      nodes.forEach((node) => {
+        gsap.fromTo(
+          node,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power3.out',
+            clearProps: 'transform,opacity',
+            scrollTrigger: {
+              trigger: node,
+              start: 'top 88%',
+              once: true
+            }
+          }
+        );
+      });
+    }, mainRef);
+
+    ScrollTrigger.refresh();
+    return () => ctx.revert();
+  }, [preloaderComplete]);
+
+  // Smooth anchor scrolling via Lenis (or native jump if reduced motion)
+  const handleNavigate = useCallback((e, href) => {
+    if (!href || !href.startsWith('#')) return;
+    const target = href === '#top' ? 0 : document.querySelector(href);
+    if (target === null) return;
+    e.preventDefault();
+
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(target, { offset: href === '#top' ? 0 : -72 });
+    } else if (typeof target === 'number') {
+      window.scrollTo({ top: 0 });
+    } else {
+      target.scrollIntoView({ block: 'start' });
+    }
+  }, []);
+
   return (
-    <div className="bg-[#f8f9fa] dark:bg-[#0b0c0e] text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300 relative selection:bg-slate-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
-      
-      {/* 3D Glowing Neon Tubes Cursor (Active exclusively on the background) */}
-      <TubesCursor theme={theme} />
+    <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] relative transition-colors duration-200">
+      {/* Skip to content link for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[120] focus:px-4 focus:py-2.5 focus:rounded-lg focus:bg-[var(--text-primary)] focus:text-[var(--bg-canvas)] focus:text-sm focus:font-medium"
+      >
+        Skip to main content
+      </a>
 
-      {/* 1. Dennis Snellenberg Multilingual Preloader */}
-      {!preloaderComplete && (
-        <Preloader onComplete={() => setPreloaderComplete(true)} />
-      )}
+      {/* Subtle architectural background grid (hero atmosphere only) */}
+      <div
+        aria-hidden="true"
+        className="arch-grid pointer-events-none fixed inset-x-0 top-0 h-[560px] z-0"
+      />
 
-      {/* 2. Minimalist Navbar */}
-      <Navbar theme={theme} onToggleTheme={handleToggleTheme} />
+      {/* Lightweight CSS pointer ambient highlight */}
+      <AmbientPointer />
 
-      {/* 3. Hero Section featuring Portrait & Editorial Typography */}
-      <main className="relative z-10">
-        <Hero ready={preloaderComplete} />
+      {/* Theme-aware, original architectural preloader */}
+      {!preloaderComplete && <Preloader onComplete={handlePreloaderComplete} />}
 
-        {/* 4. Selected Work Section (Clean, Spacious Editorial Grid) */}
-        <section id="projects" className="py-24 px-6 sm:px-10 max-w-7xl mx-auto border-t border-black/[0.08] dark:border-white/[0.08] transition-colors">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-            <div className="space-y-2">
-              <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest">Selected Work</span>
-              <h2 className="text-3xl sm:text-5xl font-light text-slate-900 dark:text-white tracking-tight transition-colors">
-                Featured Project
-              </h2>
-            </div>
-            <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md font-normal leading-relaxed transition-colors">
-              Desktop software and developer tooling built for performance and security.
-            </p>
-          </div>
+      {/* Minimalist precision navigation */}
+      <Navbar
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
+        onNavigate={handleNavigate}
+      />
 
-          <div className="max-w-4xl">
-            {FEATURED_PROJECTS.map((project, idx) => (
-              <div 
-                key={project.id}
-                className="group p-8 sm:p-12 rounded-3xl border border-black/[0.08] dark:border-white/[0.08] bg-white/90 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/[0.04] hover:border-black/20 dark:hover:border-white/20 shadow-sm hover:shadow-2xl dark:shadow-none dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between space-y-8 backdrop-blur-sm"
-              >
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between text-xs font-mono text-slate-500">
-                    <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 font-medium">Flagship Software</span>
-                    <span className="text-slate-600 dark:text-slate-400 font-medium">{project.category}</span>
-                  </div>
-
-                  <h3 className="text-3xl sm:text-4xl font-semibold text-slate-950 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-normal transition-colors max-w-3xl">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2.5 pt-2">
-                    {project.tags.map((tag, tIdx) => (
-                      <span 
-                        key={tIdx}
-                        className="px-3 py-1.5 rounded-lg text-xs font-mono bg-black/[0.04] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.06] text-slate-800 dark:text-slate-200 transition-colors"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-8 border-t border-black/[0.06] dark:border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-sm transition-colors">
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-200 font-medium transition shadow-md"
-                  >
-                    <span>View Repository</span>
-                    <span>↗</span>
-                  </a>
-
-                  {project.demo && (
-                    <a 
-                      href={project.demo} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 font-medium transition"
-                    >
-                      Showcase & Downloads ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 4. Categorized Skills Section */}
+      {/* Main Content */}
+      <main id="main-content" ref={mainRef} className="relative z-10">
+        <Hero ready={preloaderComplete} onNavigate={handleNavigate} />
+        <FeaturedWork theme={theme} />
+        <About />
         <Skills />
-
-        {/* 5. Clean Contact Footer */}
-        <section id="contact" className="py-24 px-6 sm:px-10 max-w-7xl mx-auto border-t border-black/[0.08] dark:border-white/[0.08] text-center space-y-8 transition-colors">
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Get In Touch</span>
-            <h2 className="text-3xl sm:text-5xl font-light text-slate-900 dark:text-white tracking-tight transition-colors">
-              Have an ambitious project in mind?
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-sm transition-colors">
-              I am open to full-time engineering roles, high-impact contract work, or AI collaborations.
-            </p>
-          </div>
-
-          <div className="pt-4 flex flex-wrap justify-center items-center gap-4">
-            <a 
-              href="mailto:himanshudotdev2003@gmail.com" 
-              className="px-8 py-4 rounded-full bg-slate-950 hover:bg-slate-800 text-white dark:bg-white dark:hover:bg-slate-200 dark:text-slate-950 font-semibold text-sm transition-all shadow-xl shadow-slate-950/15 dark:shadow-white/5"
-            >
-              himanshudotdev2003@gmail.com ↗
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/himanshu-sharma-programmer/" 
-              target="_blank" 
-              rel="noreferrer"
-              className="px-6 py-4 rounded-full border border-black/15 dark:border-white/15 hover:border-black/35 dark:hover:border-white/30 bg-white/70 dark:bg-transparent backdrop-blur-sm text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white text-sm font-medium transition"
-            >
-              LinkedIn ↗
-            </a>
-            <a 
-              href="https://github.com/himanshu-dot-dev" 
-              target="_blank" 
-              rel="noreferrer"
-              className="px-6 py-4 rounded-full border border-black/15 dark:border-white/15 hover:border-black/35 dark:hover:border-white/30 bg-white/70 dark:bg-transparent backdrop-blur-sm text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white text-sm font-medium transition"
-            >
-              GitHub ↗
-            </a>
-          </div>
-        </section>
+        <Contact />
       </main>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 sm:px-10 max-w-7xl mx-auto border-t border-black/[0.06] dark:border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500 transition-colors">
-        <p>© {new Date().getFullYear()} Himanshu Sharma</p>
-        <p>Built with React, Vite, GSAP & Lenis</p>
+      {/* Clean Colophon Footer */}
+      <footer className="relative z-10 py-8 px-5 sm:px-8 max-w-6xl mx-auto border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
+        <p>© {CURRENT_YEAR} Himanshu Sharma · Chandigarh / Mohali, India</p>
+        <a
+          href="#top"
+          onClick={(e) => handleNavigate(e, '#top')}
+          className="min-h-[36px] inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+        >
+          <span>Back to top</span>
+          <span aria-hidden="true">↑</span>
+        </a>
       </footer>
     </div>
   );

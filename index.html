@@ -2,10 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Himanshu Sharma - Full Stack Developer & AI Engineer Portfolio. Building modern web and desktop applications." />
-    <title>Himanshu Sharma | Full Stack & AI Engineer</title>
+    <meta name="theme-color" content="#0b0c0e" id="theme-color-meta" />
+
+    <!-- Prevent light/dark FOUC before React hydrates -->
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('portfolio_theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = saved === 'dark' || saved === 'light' ? saved : (prefersDark ? 'dark' : 'light');
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+          const meta = document.getElementById('theme-color-meta');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0c0e' : '#f7f7f5');
+        } catch {}
+      })();
+    </script>
+
+    <title>Himanshu Sharma — Full Stack Developer &amp; AI Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio of Himanshu Sharma, a Full Stack Developer and AI Engineer in Chandigarh / Mohali, India building practical GenAI systems, RAG pipelines, and local-first developer tools including VersaRail AI."
+    />
+    <meta name="author" content="Himanshu Sharma" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Himanshu Sharma — Full Stack Developer &amp; AI Engineer" />
+    <meta
+      property="og:description"
+      content="Full-stack applications, practical AI systems, RAG pipelines, and local-first developer tools — creator of VersaRail AI."
+    />
+    <meta property="og:image" content="/projects/versarail/usage-quotas.png" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@HimanshuSupDev" />
+    <meta name="twitter:title" content="Himanshu Sharma — Full Stack Developer &amp; AI Engineer" />
+    <meta
+      name="twitter:description"
+      content="Full-stack web software, practical AI systems, and local-first developer tools — creator of VersaRail AI."
+    />
+    <meta name="twitter:image" content="/projects/versarail/usage-quotas.png" />
+
+    <!-- Bespoke Geometric Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Typography: Instrument Sans (Display), DM Sans (Body), JetBrains Mono (Technical) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Himanshu Sharma",
+        "jobTitle": "Full Stack Developer & AI Engineer",
+        "email": "mailto:himanshudotdev2003@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chandigarh / Mohali",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://github.com/himanshu-dot-dev",
+          "https://www.linkedin.com/in/himanshu-sharma-programmer/",
+          "https://x.com/HimanshuSupDev"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

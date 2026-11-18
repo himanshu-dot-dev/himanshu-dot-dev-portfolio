@@ -1,79 +1,47 @@
-# Himanshu Sharma - Developer Portfolio
+# Himanshu Sharma — Portfolio
 
-![Himanshu Sharma Portfolio](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=180&section=header&text=Himanshu%20Sharma%20%7C%20Portfolio&fontSize=32&fontAlignY=35&animation=fadeIn&fontColor=ffffff)
+Personal portfolio of **Himanshu Sharma**, Full Stack Developer & AI Engineer based in Chandigarh / Mohali, India.
 
-> High-performance, modern developer portfolio built with React 19, Vite, and Tailwind CSS v4.
+## Overview
 
----
+Built with a focus on typography, clarity, accessibility, and honest engineering documentation:
 
-## 🚀 Live Demo & Links
+- **Flagship Case Study — VersaRail AI:** Interactive product showcase with real screenshots (Usage & Quotas, Diff-First Security, Agent Workspace, Workstation UI, OS Keychain), problem/solution breakdown, and process boundary architecture.
+- **About & Engineering Approach:** Concise background and core principles across full-stack software and practical AI/RAG systems.
+- **Stack & Tooling:** Hairline-structured technical specification matrix with zero mobile truncation.
+- **Light & Dark Themes:** First-class theme parity with pre-paint FOUC prevention, WCAG AA contrast tokens, and persistent preference storage.
+- **Accessibility & Motion:** Keyboard focus indicators, skip-to-content navigation, mobile drawer (`>= 44px` tap targets), and full `prefers-reduced-motion` support across GSAP and Lenis.
 
-- **GitHub Repository**: [himanshu-dot-dev-portfolio](https://github.com/himanshu-dot-dev/himanshu-dot-dev-portfolio)
-- **Developer Profile**: [github.com/himanshu-dot-dev](https://github.com/himanshu-dot-dev)
-- **LinkedIn**: [himanshu-sharma-programmer](https://www.linkedin.com/in/himanshu-sharma-programmer/)
-- **X (Twitter)**: [@HimanshuSupDev](https://x.com/HimanshuSupDev)
+## Tech Stack
 
----
+- **Framework:** React 19 + Vite 8
+- **Styling:** Tailwind CSS v4
+- **Motion:** GSAP (ScrollTrigger) + Lenis Smooth Scroll
+- **Icons:** Lucide React + React Icons
+- **Linting:** Oxlint
 
-## ✨ Features
-
-- **⚡ Blazing Fast**: Built on Vite 8 & React 19 for instant load times and sub-second builds.
-- **🎨 Modern Cyber/Dark Aesthetic**: Tailored dark theme with subtle grid pattern, glowing radial gradients, and backdrop blur.
-- **📱 Fully Responsive**: Seamless experience across mobile screens, tablets, and wide desktop displays.
-- **💼 Interactive Project Showcase**: Filterable portfolio projects featuring real-world production repos like [VersaRail AI](https://github.com/himanshu-dot-dev/versarail-ai) and [Agent Harness](https://github.com/himanshu-dot-dev/agent-harness).
-- **🛠️ Tech Arsenal Matrix**: Categorized skill cards spanning Frontend, Backend, AI & Vector DBs, and DevOps tools.
-- **📫 Contact & Interaction**: One-click email copy with feedback state and quick mail inquiry form.
-
----
-
-## 🛠️ Tech Stack
-
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite 8](https://vite.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/) + Custom SVGs
-- **Deployment**: Compatible with GitHub Pages, Vercel, Netlify, Cloudflare Pages
-
----
-
-## 📦 Getting Started
-
-### Prerequisites
-
-- Node.js (v18+ or v20+)
-- npm (v9+)
-
-### Installation
+## Local Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/himanshu-dot-dev/himanshu-dot-dev-portfolio.git
-
-# Navigate into project directory
-cd himanshu-dot-dev-portfolio
-
-# Install dependencies
 npm install
-```
-
-### Development Server
-
-```bash
 npm run dev
 ```
 
-Runs the app in development mode at [http://localhost:5173](http://localhost:5173).
-
-### Production Build
+## Build & Lint
 
 ```bash
+npm run lint
 npm run build
+npm run preview
 ```
 
-Builds the application for production to the `dist` folder.
+## Links
 
----
+- **GitHub:** [github.com/himanshu-dot-dev](https://github.com/himanshu-dot-dev)
+- **VersaRail AI:** [versarail-landing.pages.dev](https://versarail-landing.pages.dev/) · [Repository](https://github.com/himanshu-dot-dev/versarail-ai)
+- **LinkedIn:** [himanshu-sharma-programmer](https://www.linkedin.com/in/himanshu-sharma-programmer/)
+- **X (Twitter):** [@HimanshuSupDev](https://x.com/HimanshuSupDev)
 
-## 📜 License
+## License
 
-This project is open-source and available under the [MIT License](LICENSE).
+MIT — see [LICENSE](LICENSE).

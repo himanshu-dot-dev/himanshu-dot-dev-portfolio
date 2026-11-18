@@ -1,72 +1,175 @@
-import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Menu, Moon, Sun, X, ArrowUpRight } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa6';
+import Magnetic from './Magnetic';
 
-export default function Navbar({ theme, onToggleTheme }) {
+const NAV_LINKS = [
+  { label: 'Work', href: '#work' },
+  { label: 'About', href: '#about' },
+  { label: 'Stack', href: '#stack' },
+  { label: 'Contact', href: '#contact' }
+];
+
+export default function Navbar({ theme, onToggleTheme, onNavigate }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const isDark = theme === 'dark';
 
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
+
+  const handleLinkClick = (e, href) => {
+    setMenuOpen(false);
+    onNavigate?.(e, href);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-[#f8f9fa]/80 dark:bg-[#0b0c0e]/70 border-b border-black/[0.06] dark:border-white/[0.06] transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 h-20 flex items-center justify-between">
-        
-        {/* Editorial Brand signature */}
-        <a 
-          href="#" 
-          className="group flex items-center gap-2 text-sm sm:text-base font-normal tracking-tight text-slate-800 dark:text-slate-300 hover:text-black dark:hover:text-white transition"
+    <header className="fixed top-0 left-0 right-0 z-40 border-b border-[var(--border-subtle)] bg-[var(--bg-canvas)]/88 backdrop-blur-md transition-colors duration-200">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 sm:h-18 flex items-center justify-between gap-4">
+        {/* Brand */}
+        <a
+          href="#top"
+          onClick={(e) => handleLinkClick(e, '#top')}
+          className="group inline-flex items-center gap-2.5 min-h-[44px] text-sm font-medium tracking-tight text-[var(--text-primary)]"
         >
-          <span className="text-slate-400 dark:text-slate-500 font-mono text-xs">©</span>
-          <span className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition">himanshu.dev</span>
-          <span className="hidden sm:inline-block text-slate-400 dark:text-slate-500 text-xs font-mono ml-2">/ New Delhi, IN</span>
+          <span
+            aria-hidden="true"
+            className="w-6 h-6 rounded-[6px] border border-[var(--border-strong)] bg-[var(--bg-surface)] flex items-center justify-center font-mono text-[11px] font-medium text-[var(--text-primary)] group-hover:border-[var(--accent)] transition-colors"
+          >
+            H
+          </span>
+          <span className="font-display font-semibold tracking-[-0.02em]">
+            himanshu.dev
+          </span>
+          <span className="hidden lg:inline-flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] ml-1">
+            <span aria-hidden="true" className="text-[var(--border-strong)]">/</span>
+            <span>Chandigarh, IN</span>
+          </span>
         </a>
 
-        {/* Clean nav links & Theme Toggle */}
-        <nav className="flex items-center gap-5 sm:gap-8 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400">
-          <a 
-            href="#projects" 
-            className="hover:text-slate-950 dark:hover:text-white transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-500 dark:after:bg-cyan-400 hover:after:w-full after:transition-all after:duration-300"
-          >
-            Work
-          </a>
-          <a 
-            href="#skills" 
-            className="hover:text-slate-950 dark:hover:text-white transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-500 dark:after:bg-cyan-400 hover:after:w-full after:transition-all after:duration-300"
-          >
-            Skills
-          </a>
-          <a 
-            href="#contact" 
-            className="hover:text-slate-950 dark:hover:text-white transition relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-500 dark:after:bg-cyan-400 hover:after:w-full after:transition-all after:duration-300"
-          >
-            Contact
-          </a>
+        {/* Desktop navigation */}
+        <nav aria-label="Primary" className="hidden md:flex items-center gap-7">
+          {NAV_LINKS.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleLinkClick(e, item.href)}
+              className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-1"
+            >
+              {item.label}
+            </a>
+          ))}
 
-          {/* Theme Toggle Button */}
-          <button
-            onClick={onToggleTheme}
-            aria-label="Toggle theme"
-            className="p-2.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.08] dark:hover:bg-white/[0.08] text-slate-700 dark:text-slate-200 transition-all duration-300 cursor-pointer flex items-center justify-center hover:scale-105 active:scale-95"
-            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            {isDark ? (
-              <Sun 
-                className="w-4 h-4 text-amber-400 transition-transform duration-300 rotate-0 hover:rotate-45 pointer-events-none" 
-              />
-            ) : (
-              <Moon 
-                className="w-4 h-4 text-black transition-transform duration-300 rotate-0 hover:-rotate-12 pointer-events-none" 
-              />
-            )}
-          </button>
+          <span aria-hidden="true" className="h-4 w-[1px] bg-[var(--border-subtle)]" />
 
           <a
             href="https://github.com/himanshu-dot-dev"
             target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full border border-black/10 dark:border-white/10 hover:border-black/25 dark:hover:border-white/30 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-slate-800 dark:text-slate-200 text-xs font-medium transition"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors py-1"
           >
-            GitHub ↗
+            <FaGithub className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>GitHub</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
           </a>
+
+          <Magnetic strength={0.22} maxOffset={5}>
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+              title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+              className="w-10 h-10 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] hover:border-[var(--border-strong)] text-[var(--text-primary)] inline-flex items-center justify-center transition-colors cursor-pointer"
+            >
+              {isDark ? (
+                <Sun className="w-4 h-4 text-amber-400" aria-hidden="true" />
+              ) : (
+                <Moon className="w-4 h-4 text-[var(--text-primary)]" aria-hidden="true" />
+              )}
+            </button>
+          </Magnetic>
         </nav>
+
+        {/* Mobile controls (>= 44x44 touch targets) */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+            className="w-11 h-11 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] inline-flex items-center justify-center transition-colors cursor-pointer"
+          >
+            {isDark ? (
+              <Sun className="w-4 h-4 text-amber-400" aria-hidden="true" />
+            ) : (
+              <Moon className="w-4 h-4 text-[var(--text-primary)]" aria-hidden="true" />
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav-drawer"
+            className="w-11 h-11 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] inline-flex items-center justify-center transition-colors cursor-pointer"
+          >
+            {menuOpen ? (
+              <X className="w-5 h-5" aria-hidden="true" />
+            ) : (
+              <Menu className="w-5 h-5" aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Drawer */}
+      {menuOpen && (
+        <nav
+          id="mobile-nav-drawer"
+          aria-label="Mobile navigation"
+          className="md:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-5 py-4"
+        >
+          <div className="flex flex-col divide-y divide-[var(--border-subtle)]">
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => handleLinkClick(e, item.href)}
+                className="min-h-[48px] flex items-center justify-between text-base font-medium text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
+              >
+                <span>{item.label}</span>
+                <span className="font-mono text-xs text-[var(--text-muted)]">↓</span>
+              </a>
+            ))}
+          </div>
+
+          <div className="pt-4 mt-2 border-t border-[var(--border-subtle)] flex items-center gap-3">
+            <a
+              href="https://github.com/himanshu-dot-dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 min-h-[44px] px-4 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] inline-flex items-center justify-center gap-2 text-sm font-medium text-[var(--text-primary)]"
+            >
+              <FaGithub className="w-4 h-4" aria-hidden="true" />
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/himanshu-sharma-programmer/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 min-h-[44px] px-4 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface)] inline-flex items-center justify-center gap-2 text-sm font-medium text-[var(--text-primary)]"
+            >
+              <FaLinkedin className="w-4 h-4" aria-hidden="true" />
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }

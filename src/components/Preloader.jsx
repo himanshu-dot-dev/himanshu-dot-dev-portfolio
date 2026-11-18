@@ -1,134 +1,156 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-const WORDS = [
-  "Hello",
-  "Bonjour",
-  "नमस्ते",
-  "Ciao",
-  "Olà",
-  "やあ",
-  "Hallo",
-  "Hello"
+const GREETINGS = [
+  { word: 'Hello', code: 'EN' },
+  { word: 'नमस्ते', code: 'HI' },
+  { word: 'Bonjour', code: 'FR' },
+  { word: 'Ciao', code: 'IT' },
+  { word: 'Olà', code: 'PT' },
+  { word: 'やあ', code: 'JA' },
+  { word: 'Hallo', code: 'DE' },
+  { word: 'Hello', code: 'EN' }
 ];
 
 export default function Preloader({ onComplete }) {
   const [index, setIndex] = useState(0);
-  const containerRef = useRef(null);
-  const pathRef = useRef(null);
-  const textRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const overlayRef = useRef(null);
+  const contentRef = useRef(null);
+  const barRef = useRef(null);
 
   useEffect(() => {
-    // Disable body scroll while preloader is active
-    document.body.style.overflow = 'hidden';
+    const reducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Cycle through words rapidly like Dennis Snellenberg
-    if (index < WORDS.length - 1) {
-      const timeout = setTimeout(() => {
-        setIndex((prev) => prev + 1);
-      }, index === 0 ? 320 : 180);
-      return () => clearTimeout(timeout);
+    if (reducedMotion) {
+      onComplete?.();
+      return undefined;
     }
 
-    // When last word is reached, trigger exit animation
-    const timeout = setTimeout(() => {
-      const container = containerRef.current;
-      const path = pathRef.current;
-      const text = textRef.current;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
-      if (!container || !path) return;
+    // Sync greeting steps, tabular progress counter, and 1px hairline bar cleanly
+    const stepDurations = [240, 145, 130, 130, 130, 130, 130];
+    const totalCycleMs = stepDurations.reduce((sum, ms) => sum + ms, 0) + 180;
+    const totalCycleSec = totalCycleMs / 1000;
 
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+    const timeouts = [];
+    let elapsed = 0;
 
-      // Initial curved SVG path (drawn as curved downward like pulling a curtain)
-      const initialCurve = `M0 0 L${width} 0 L${width} ${height} Q${width / 2} ${height + 300} 0 ${height} L0 0`;
-      const targetCurve = `M0 0 L${width} 0 L${width} ${height} Q${width / 2} ${height} 0 ${height} L0 0`;
+    stepDurations.forEach((delay, stepIdx) => {
+      elapsed += delay;
+      const id = window.setTimeout(() => {
+        setIndex(stepIdx + 1);
+      }, elapsed);
+      timeouts.push(id);
+    });
 
-      const tl = gsap.timeline({
-        onComplete: () => {
-          document.body.style.overflow = '';
-          if (onComplete) onComplete();
-        }
-      });
+    const counter = { value: 0 };
+    const tl = gsap.timeline({
+      onComplete: () => {
+        document.body.style.overflow = prevOverflow;
+        onComplete?.();
+      }
+    });
 
-      // 1. Text fades out smoothly with slight upward drift
-      tl.to(text, {
-        y: -40,
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.in"
-      });
+    tl.to(counter, {
+      value: 100,
+      duration: totalCycleSec,
+      ease: 'power1.inOut',
+      onUpdate: () => {
+        setProgress(Math.round(counter.value));
+      }
+    });
 
-      // 2. Animate the SVG curve flat
-      tl.to(path, {
-        attr: { d: targetCurve },
-        duration: 0.8,
-        ease: "power3.inOut"
-      }, "-=0.1");
+    tl.to(
+      barRef.current,
+      {
+        scaleX: 1,
+        duration: totalCycleSec,
+        ease: 'power1.inOut'
+      },
+      0
+    );
 
-      // 3. Slide the entire preloader panel up
-      tl.to(container, {
+    tl.to(contentRef.current, {
+      y: -16,
+      opacity: 0,
+      duration: 0.26,
+      ease: 'power2.in'
+    });
+
+    tl.to(
+      overlayRef.current,
+      {
         yPercent: -100,
-        duration: 0.85,
-        ease: "power4.inOut"
-      }, "-=0.65");
+        duration: 0.52,
+        ease: 'power4.inOut'
+      },
+      '-=0.12'
+    );
 
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [index, onComplete]);
-
-  // Handle window dimensions for SVG path
-  const [dimensions, setDimensions] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
-    height: typeof window !== 'undefined' ? window.innerHeight : 800
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+    return () => {
+      timeouts.forEach((id) => window.clearTimeout(id));
+      tl.kill();
+      document.body.style.overflow = prevOverflow;
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [onComplete]);
 
-  const { width, height } = dimensions;
-  const initialPath = `M0 0 L${width} 0 L${width} ${height} Q${width / 2} ${height + 300} 0 ${height} L0 0`;
+  const current = GREETINGS[index] || GREETINGS[0];
 
   return (
     <div
-      ref={containerRef}
-      className="fixed inset-0 z-[100] bg-[#141517] text-white pointer-events-auto"
-      style={{ height: 'calc(100vh + 300px)' }}
+      ref={overlayRef}
+      role="status"
+      aria-label="Loading portfolio"
+      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[var(--bg-canvas)] text-[var(--text-primary)] px-6 sm:px-10 py-8 border-b border-[var(--border-subtle)]"
     >
-      {/* Centered Cycling Word - anchored to visible 100vh viewport */}
-      <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center pointer-events-none">
-        <div
-          ref={textRef}
-          className="relative z-10 flex items-center gap-3 select-none"
-        >
-          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-lg shadow-cyan-400/50" />
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-slate-100 font-sans">
-            {WORDS[index]}
-          </h1>
+      {/* Top bar */}
+      <div className="max-w-6xl w-full mx-auto flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+        <span className="inline-flex items-center gap-2.5">
+          <span className="inline-block w-2 h-2 bg-[var(--accent)] rounded-[2px]" />
+          <span>himanshu.dev</span>
+        </span>
+        <span>CHANDIGARH / IN</span>
+      </div>
+
+      {/* Center multilingual greeting & precision hairline */}
+      <div ref={contentRef} className="max-w-6xl w-full mx-auto space-y-6">
+        <div className="flex items-end justify-between gap-4">
+          <div className="space-y-2">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-muted)] inline-flex items-center gap-2">
+              <span className="text-[var(--accent)]">{current.code}</span>
+              <span aria-hidden="true">/</span>
+              <span>Himanshu Sharma</span>
+            </p>
+            <p className="font-display text-4xl sm:text-6xl font-semibold tracking-[-0.035em] leading-none text-[var(--text-primary)] select-none min-h-[1.15em]">
+              {current.word}
+            </p>
+          </div>
+
+          <span className="font-mono text-xl sm:text-3xl font-medium tabular-nums tracking-tight text-[var(--text-muted)]">
+            {String(progress).padStart(2, '0')}
+          </span>
+        </div>
+
+        <div className="w-full h-[1px] bg-[var(--border-subtle)] overflow-hidden">
+          <div
+            ref={barRef}
+            className="h-full w-full bg-[var(--text-primary)] origin-left scale-x-0"
+          />
         </div>
       </div>
 
-      {/* SVG Liquid Bottom Curve */}
-      <svg
-        className="absolute top-0 left-0 w-full pointer-events-none"
-        style={{ height: 'calc(100vh + 300px)' }}
-      >
-        <path
-          ref={pathRef}
-          d={initialPath}
-          fill="#141517"
-        />
-      </svg>
+      {/* Bottom meta */}
+      <div className="max-w-6xl w-full mx-auto flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+        <span>Full Stack Developer &amp; AI Engineer</span>
+        <span className="tabular-nums">
+          {String(index + 1).padStart(2, '0')} / {String(GREETINGS.length).padStart(2, '0')}
+        </span>
+      </div>
     </div>
   );
 }
