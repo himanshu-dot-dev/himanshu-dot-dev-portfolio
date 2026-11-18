@@ -113,6 +113,16 @@ export default function App() {
     return () => ctx.revert();
   }, [preloaderComplete]);
 
+  // Pause Lenis while a project case study drawer is open
+  const handleModalChange = useCallback((isOpen) => {
+    if (!lenisRef.current) return;
+    if (isOpen) {
+      lenisRef.current.stop();
+    } else {
+      lenisRef.current.start();
+    }
+  }, []);
+
   // Smooth anchor scrolling via Lenis (or native jump if reduced motion)
   const handleNavigate = useCallback((e, href) => {
     if (!href || !href.startsWith('#')) return;
@@ -161,7 +171,7 @@ export default function App() {
       {/* Main Content */}
       <main id="main-content" ref={mainRef} className="relative z-10">
         <Hero ready={preloaderComplete} onNavigate={handleNavigate} />
-        <FeaturedWork theme={theme} />
+        <FeaturedWork theme={theme} onModalChange={handleModalChange} />
         <About />
         <Skills />
         <Contact />
