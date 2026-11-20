@@ -5,6 +5,7 @@ import Magnetic from './Magnetic';
 
 const NAV_LINKS = [
   { label: 'Work', href: '#work' },
+  { label: 'Experience', href: '#experience' },
   { label: 'About', href: '#about' },
   { label: 'Stack', href: '#stack' },
   { label: 'Contact', href: '#contact' }

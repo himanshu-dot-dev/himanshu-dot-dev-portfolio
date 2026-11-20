@@ -8,6 +8,7 @@ import {
   SiJavascript,
   SiMongodb,
   SiNodedotjs,
+  SiPhp,
   SiReact,
   SiSqlite,
   SiSupabase,
@@ -39,6 +40,7 @@ const STACK_DOMAINS = [
     summary: 'API services, typed IPC contracts, schema validation, and desktop engines.',
     items: [
       { name: 'Node.js', icon: SiNodedotjs },
+      { name: 'PHP', icon: SiPhp },
       { name: 'Express.js', icon: SiExpress },
       { name: 'Electron IPC', icon: SiElectron },
       { name: 'Zod', icon: SiZod }
@@ -83,7 +85,7 @@ export default function Skills() {
       <div className="reveal-section flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
         <div className="space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">
-            03 / Stack &amp; Tooling
+            04 / Stack &amp; Tooling
           </p>
           <h2
             id="stack-heading"

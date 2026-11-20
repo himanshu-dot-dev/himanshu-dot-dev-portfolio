@@ -8,6 +8,7 @@ import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import FeaturedWork from './components/FeaturedWork';
+import Experience from './components/Experience';
 import About from './components/About';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -172,6 +173,7 @@ export default function App() {
       <main id="main-content" ref={mainRef} className="relative z-10">
         <Hero ready={preloaderComplete} onNavigate={handleNavigate} />
         <FeaturedWork theme={theme} onModalChange={handleModalChange} />
+        <Experience />
         <About />
         <Skills />
         <Contact />

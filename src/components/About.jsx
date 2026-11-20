@@ -32,7 +32,7 @@ export default function About() {
         {/* Left column */}
         <div className="reveal-section lg:col-span-5 space-y-4">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">
-            02 / About &amp; Approach
+            03 / About &amp; Approach
           </p>
           <h2
             id="about-heading"

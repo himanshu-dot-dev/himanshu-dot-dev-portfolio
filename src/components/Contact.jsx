@@ -50,7 +50,7 @@ export default function Contact() {
         <div className="reveal-section lg:col-span-7 space-y-6">
           <div className="space-y-3">
             <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-muted)]">
-              04 / Contact
+              05 / Contact
             </p>
             <h2
               id="contact-heading"
