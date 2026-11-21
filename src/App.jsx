@@ -181,7 +181,7 @@ export default function App() {
 
       {/* Clean Colophon Footer */}
       <footer className="relative z-10 py-8 px-5 sm:px-8 max-w-6xl mx-auto border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
-        <p>© {CURRENT_YEAR} Himanshu Sharma · Chandigarh / Mohali, India</p>
+        <p>© {CURRENT_YEAR} Himanshu Sharma · India / Mohali, Chandigarh</p>
         <a
           href="#top"
           onClick={(e) => handleNavigate(e, '#top')}

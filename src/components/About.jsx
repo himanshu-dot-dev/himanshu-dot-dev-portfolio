@@ -42,7 +42,7 @@ export default function About() {
             Full-stack software with practical AI systems underneath.
           </h2>
           <p className="font-mono text-xs text-[var(--text-muted)] pt-2">
-            Based in Chandigarh / Mohali, India
+            Based in India / Mohali, Chandigarh
           </p>
         </div>
 

@@ -62,7 +62,7 @@ export default function Hero({ ready, onNavigate }) {
               <span>Open to engineering roles &amp; select work</span>
             </span>
             <span aria-hidden="true" className="hidden sm:inline text-[var(--border-strong)]">·</span>
-            <span>Chandigarh / Mohali, India</span>
+            <span>India / Mohali, Chandigarh</span>
           </div>
 
           {/* Primary Heading & Role */}
@@ -150,9 +150,9 @@ export default function Hero({ ready, onNavigate }) {
 
         {/* Right column: Clean, unencumbered portrait frame */}
         <div className="lg:col-span-5 flex justify-center lg:justify-end">
-          <figure
+          <div
             ref={portraitRef}
-            className="w-full max-w-[360px] space-y-3"
+            className="w-full max-w-[360px]"
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-surface)] shadow-sm dark:shadow-none">
               <img
@@ -163,12 +163,7 @@ export default function Hero({ ready, onNavigate }) {
                 className="w-full h-full object-cover object-top"
               />
             </div>
-
-            <figcaption className="flex items-center justify-between px-1 text-[11px] font-mono text-[var(--text-muted)]">
-              <span>HIMANSHU SHARMA</span>
-              <span>30.73° N, 76.77° E</span>
-            </figcaption>
-          </figure>
+          </div>
         </div>
       </div>
     </section>
