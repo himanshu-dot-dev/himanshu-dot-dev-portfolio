@@ -118,34 +118,6 @@ export default function Hero({ ready, onNavigate }) {
               </a>
             </Magnetic>
           </div>
-
-          {/* Crisp technical focus strip */}
-          <div className="hero-stagger pt-6 border-t border-[var(--border-subtle)] grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                Focus
-              </p>
-              <p className="text-sm font-medium text-[var(--text-primary)] mt-1">
-                Full-Stack &amp; Desktop Apps
-              </p>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                AI Engineering
-              </p>
-              <p className="text-sm font-medium text-[var(--text-primary)] mt-1">
-                RAG Pipelines &amp; Automation
-              </p>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                Flagship Build
-              </p>
-              <p className="text-sm font-medium text-[var(--text-primary)] mt-1">
-                VersaRail AI Workstation
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Right column: Clean, unencumbered portrait frame */}
