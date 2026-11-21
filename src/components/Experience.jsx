@@ -30,16 +30,13 @@ const EDUCATION = [
     institution: 'Govt. Polytechnic, Morni Hills',
     period: 'Aug 2019 — Jun 2022',
     score: 'Score: 71.4%',
-    description:
-      'Rigorous foundational coursework in algorithms, data structures, object-oriented software engineering, database management systems, and computer networks.'
+    description: 'Learned computer science fundamentals and programming.'
   },
   {
     degree: 'Matriculation (10th Standard)',
     institution: 'Govt. Sr. Secondary School, Morni',
     period: 'Completed 2019',
-    score: 'Score: 78.9%',
-    description:
-      'Secondary school education with high academic distinction in mathematics and science.'
+    score: 'Score: 78.9%'
   }
 ];
 
@@ -64,9 +61,6 @@ export default function Experience() {
             Work History &amp; Background
           </h2>
         </div>
-        <p className="text-sm text-[var(--text-secondary)] max-w-[46ch] leading-relaxed">
-          Full-time software engineering experience in production web systems, coupled with a solid academic computer science foundation.
-        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
@@ -173,9 +167,11 @@ export default function Experience() {
                   <span className="text-[var(--accent)] font-medium">{edu.score}</span>
                 </div>
 
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
-                  {edu.description}
-                </p>
+                {edu.description && (
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed pt-1">
+                    {edu.description}
+                  </p>
+                )}
               </div>
             ))}
           </div>
