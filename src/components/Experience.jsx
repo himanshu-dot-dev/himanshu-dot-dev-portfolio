@@ -3,15 +3,16 @@ import { ArrowUpRight, Briefcase, Calendar, GraduationCap, MapPin } from 'lucide
 
 const EXPERIENCES = [
   {
-    role: 'Software Developer',
+    role: 'Software Developer · WordPress Plugin Developer',
     company: 'Cool Plugins',
     companyUrl: 'https://coolplugins.net/',
     employmentType: 'Full-time',
     period: 'Jun 2023 — Present',
     location: 'Mohali (Phase 7), India · On-site',
     summary:
-      'Full-stack software developer building and maintaining high-traffic production web plugins and web applications. Responsible for architecting scalable backend logic in PHP, engineering responsive JavaScript and React interfaces, integrating robust REST APIs, and implementing modern agentic workflows and AI automation.',
+      'Full-stack software developer and WordPress plugin developer building and maintaining high-traffic production plugins and web applications. Responsible for architecting scalable backend logic in PHP, developing custom WordPress plugin architectures, engineering responsive JavaScript and React interfaces, integrating robust REST APIs, and implementing modern agentic workflows and AI automation.',
     skills: [
+      'WordPress',
       'PHP',
       'JavaScript',
       'React',

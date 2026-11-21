@@ -16,6 +16,7 @@ import {
   SiTailwindcss,
   SiTypescript,
   SiVitest,
+  SiWordpress,
   SiZod
 } from 'react-icons/si';
 import { Database, Workflow } from 'lucide-react';
@@ -40,6 +41,7 @@ const STACK_DOMAINS = [
     items: [
       { name: 'Node.js', icon: SiNodedotjs },
       { name: 'PHP', icon: SiPhp },
+      { name: 'WordPress', icon: SiWordpress },
       { name: 'Express.js', icon: SiExpress },
       { name: 'Electron IPC', icon: SiElectron },
       { name: 'Zod', icon: SiZod }
