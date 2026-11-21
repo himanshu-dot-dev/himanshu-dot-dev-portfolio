@@ -47,10 +47,6 @@ export default function Navbar({ theme, onToggleTheme, onNavigate }) {
           <span className="font-display font-semibold tracking-[-0.02em]">
             himanshu.dev
           </span>
-          <span className="hidden lg:inline-flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] ml-1">
-            <span aria-hidden="true" className="text-[var(--border-strong)]">/</span>
-            <span>Chandigarh, IN</span>
-          </span>
         </a>
 
         {/* Desktop navigation */}
