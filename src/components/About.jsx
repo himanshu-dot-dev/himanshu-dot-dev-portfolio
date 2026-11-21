@@ -50,10 +50,10 @@ export default function About() {
         <div className="lg:col-span-7 space-y-10">
           <div className="reveal-section space-y-4 text-base text-[var(--text-secondary)] leading-[1.72] max-w-[62ch]">
             <p>
-              I&apos;m Himanshu Sharma, a Full Stack Developer and AI Engineer focused on building end-to-end software — spanning React and TypeScript interfaces, Node.js backends, RAG pipelines, AI automation workflows, and local-first desktop tools.
+              I focus on building resilient, end-to-end software architectures — from high-traffic production web plugins and full-stack systems to local-first desktop developer tools with strict security and privacy boundaries.
             </p>
             <p>
-              My recent work centers on <strong className="font-medium text-[var(--text-primary)]">VersaRail AI</strong>, where I designed the Electron process boundaries, multi-provider failover routing, SQLite token budget tracking, and diff-first security model from the ground up.
+              My recent engineering work centers on <strong className="font-medium text-[var(--text-primary)]">VersaRail AI</strong>, where I designed the multi-provider failover mesh, native SQLite token accounting, hardened Electron process isolation, and diff-first security model.
             </p>
           </div>
 
