@@ -7,6 +7,7 @@ import {
   SiGithub,
   SiJavascript,
   SiMongodb,
+  SiMysql,
   SiNodedotjs,
   SiPhp,
   SiReact,
@@ -24,7 +25,6 @@ const STACK_DOMAINS = [
     id: 'frontend-desktop',
     index: '01',
     title: 'Frontend & Desktop',
-    summary: 'Typed interfaces, design systems, and cross-platform desktop shells.',
     items: [
       { name: 'TypeScript', icon: SiTypescript },
       { name: 'JavaScript', icon: SiJavascript },
@@ -37,7 +37,6 @@ const STACK_DOMAINS = [
     id: 'backend-systems',
     index: '02',
     title: 'Backend & Runtime',
-    summary: 'API services, typed IPC contracts, schema validation, and desktop engines.',
     items: [
       { name: 'Node.js', icon: SiNodedotjs },
       { name: 'PHP', icon: SiPhp },
@@ -50,11 +49,11 @@ const STACK_DOMAINS = [
     id: 'ai-data',
     index: '03',
     title: 'AI Systems & Data',
-    summary: 'Retrieval pipelines, vector search, automation, and local/cloud storage.',
     items: [
       { name: 'RAG Pipelines', icon: Workflow },
       { name: 'AI Automation', icon: Workflow },
       { name: 'Pinecone', icon: Database },
+      { name: 'MySQL', icon: SiMysql },
       { name: 'node:sqlite', icon: SiSqlite },
       { name: 'MongoDB', icon: SiMongodb },
       { name: 'Supabase', icon: SiSupabase }
@@ -64,7 +63,6 @@ const STACK_DOMAINS = [
     id: 'tooling',
     index: '04',
     title: 'Testing & Delivery',
-    summary: 'Version control, automated test suites, and container workflows.',
     items: [
       { name: 'Vitest', icon: SiVitest },
       { name: 'Docker', icon: SiDocker },
@@ -105,9 +103,9 @@ export default function Skills() {
         {STACK_DOMAINS.map((domain) => (
           <div
             key={domain.id}
-            className="py-7 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start"
+            className="py-6 sm:py-7 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-center"
           >
-            <div className="lg:col-span-4 space-y-1.5">
+            <div className="lg:col-span-4">
               <div className="flex items-baseline gap-2.5">
                 <span className="font-mono text-xs text-[var(--text-muted)]">
                   {domain.index}
@@ -116,12 +114,9 @@ export default function Skills() {
                   {domain.title}
                 </h3>
               </div>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed pl-7">
-                {domain.summary}
-              </p>
             </div>
 
-            <div className="lg:col-span-8 flex flex-wrap gap-2.5 lg:pt-0.5 pl-7 lg:pl-0">
+            <div className="lg:col-span-8 flex flex-wrap gap-2.5">
               {domain.items.map((skill) => {
                 const Icon = skill.icon;
                 return (
